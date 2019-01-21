@@ -3,13 +3,14 @@
 // var ReactDOM = require('react-dom');
 //es6 instantiation
 import React from 'react';
+import $ from 'jquery'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {name: '',
-                 message: ''};
+    this.state = {'name': '',
+                 'message': ''};
 
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeMessage = this.handleChangeMessage.bind(this);
@@ -25,9 +26,41 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name & message was submitted: ' + this.state.name + ': ' + this.state.message);
+  	// console.log('This is the State', this.state);
+  	event.preventDefault();
+
+  	$.ajax({
+      type: "POST",
+      url: 'http://ec2-13-57-25-101.us-west-1.compute.amazonaws.com:3000/api/hrsf110/greeting',
+      data: JSON.stringify(this.state),
+      dataType: 'application/json', 
+      success: function(data){ 
+      	 console.log('SUCCESS', data);
+      	},
+      error: function(data) {
+      	console.log('ERROR', data);
+      },
+      
+    });
+  	// runAjax(function(output) {
+   //    console.log(output);
+  	// });
+    
+    // alert('A name & message was submitted: ' + this.state.name + ': ' + this.state.message);
     // event.preventDefault();
   }
+
+  // function runAjax(handleData) {
+  //   $.ajax({
+  //     type: "POST",
+  //     url: 'http://ec2-13-57-25-101.us-west-1.compute.amazonaws.com:3000/api/hrsf110/greeting',
+  //     data: JSON.stringify(this.state),
+  //     success: function(data){ 
+  //     	 handleData(data);
+  //     	},
+  //     dataType: 'json' 
+  //   });
+  // }
 
   render() {
     return (
