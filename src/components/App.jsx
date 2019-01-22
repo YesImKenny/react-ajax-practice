@@ -33,9 +33,9 @@ class App extends React.Component {
       type: "POST",
       url: 'http://ec2-13-57-25-101.us-west-1.compute.amazonaws.com:3000/api/hrsf110/greeting',
       data: JSON.stringify(this.state),
-      dataType: 'application/json', 
+      contentType: 'application/json', 
       success: function(data){ 
-      	 console.log('SUCCESS', data);
+      	 $('.container').text(data);
       	},
       error: function(data) {
       	console.log('ERROR', data);
@@ -66,7 +66,7 @@ class App extends React.Component {
     return (
      <div>
       <h1>Server Response:</h1>
-      <h1>Response Goes Here!</h1>
+      <h1 className = 'container'>Response Goes Here!</h1>
 
      <form onSubmit={this.handleSubmit}>
         <label>
